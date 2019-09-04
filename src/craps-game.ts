@@ -12,21 +12,29 @@ export class CrapsTable {
   
   private _bets: Bet[] = [];
   
+  
   constructor(){
     this.dice = new Dice();
   }
-
+  
   get isPointOn(): boolean {
     return this._isPointOn;
   };
-
-  get placedBets() : Bet[] {
+  
+  get bets() : Bet[] {
     return this._bets;
   };
-
+  
   placeBet(bet: Bet) : void {
     this._bets.push(bet);
   };
+  
+  getPlayerBets(playerId: string) : Bet[] {
+    let playerBets = _.filter(this._bets, bet => {
+      return bet.player == playerId;
+    });
+    return _.clone(playerBets);
+  }
 
   rollDice() : void {
     // Roll dice and resolve bets.

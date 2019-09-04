@@ -23,16 +23,24 @@ describe('CrapsGame', (): void => {
   });
   
   it('should allow you to place a pass line bet', () => {
-    expect(table.placedBets.length).toBe(0);
-    table.placeBet(new Bet(1));
-    expect(table.placedBets.length).toBe(1);
+    expect(table.bets.length).toBe(0);
+    table.placeBet(new Bet(1, ''));
+    expect(table.bets.length).toBe(1);
+  });
+
+  it('should be able to returns bets by player', () => {
+    let pid1 = 'player1'
+    let betP1 = new Bet(1, pid1);
+    table.placeBet(betP1);
+    table.placeBet(new Bet(2, 'player2'))
+    expect(table.getPlayerBets(pid1)).toEqual([betP1]);
   });
 
   it('should take bets on 2,3,12 when point is off', ()=> {
     let crapsRolled = function(rollValue : number) {
-      table.placeBet(new Bet(1));
+      table.placeBet(new Bet(1, ''));
       table.resolveBets(rollValue);
-      expect(table.placedBets.length).toBe(0);
+      expect(table.bets.length).toBe(0);
     }
 
     crapsRolled(2);
@@ -46,7 +54,7 @@ describe('CrapsGame', (): void => {
       table = getNewTable();
       expect(table.isPointOn).toBe(false);
       expect(table.currentPoint).toBeUndefined();
-      table.placeBet(new Bet(1));
+      table.placeBet(new Bet(1, ''));
       spyOn(table.dice, 'roll').and.returnValue(rollValue);
       table.rollDice();
       expect(table.isPointOn).toBe(true);
