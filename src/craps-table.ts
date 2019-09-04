@@ -21,12 +21,12 @@ export class CrapsTable {
     return this._isPointOn;
   };
   
-  get bets() : Bet[] {
-    return this._bets;
-  };
-  
   placeBet(bet: Bet) : void {
     this._bets.push(bet);
+  };
+
+  get bets() : Bet[] {
+    return this._bets;
   };
   
   getPlayerBets(playerId: string) : Bet[] {
@@ -88,7 +88,3 @@ export class CrapsTable {
   }
 ;
 }
-
-enum BetTypes {
-  PassLine,
-};

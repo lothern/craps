@@ -1,4 +1,4 @@
-import { CrapsTable } from '../src/craps-game';
+import { CrapsTable } from '../src/craps-table';
 import { Bet } from '../src/bet';
 
 describe('CrapsGame', (): void => {
