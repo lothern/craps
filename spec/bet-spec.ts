@@ -21,7 +21,8 @@ describe('bet', () => {
     let testOddsPay = function(point: number, payOut: number) {
       let bet = new Bet(betAmount, 'player1');
       bet.oddsAmount = oddsAmount;
-      expect(bet.computeOddsPayout(point)).toBe(payOut);
+      bet.point = point;
+      expect(Bet.computeOddsPayout(bet)).toBe(payOut);
     }
 
     // 6:5 odds payout.

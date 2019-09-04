@@ -8,6 +8,7 @@ export class Bet {
   payOut: number;
   player: string;
   oddsAmount: number = 0;
+  point: number = undefined;
   
   constructor(amount: number, playerId: string)  {
     this.amount = amount;
@@ -23,19 +24,19 @@ export class Bet {
     this.payOut = this.amount;
   }
   
-  computeOddsPayout(point: number): number {
-    switch (point) {
+  static computeOddsPayout(bet: Bet): number {
+    switch (bet.point) {
       case 4:
       case 10:
-        return this.oddsAmount * 2;
+        return bet.oddsAmount * 2;
         break;
       case 5:
       case 9:
-        return Math.floor(this.oddsAmount / 2) * 3;
+        return Math.floor(bet.oddsAmount / 2) * 3;
         break;
       case 6:
       case 8:
-        return Math.floor(this.oddsAmount / 5) * 6;
+        return Math.floor(bet.oddsAmount / 5) * 6;
         break;       
     }
   }
