@@ -1,8 +1,12 @@
 import { Bet } from './bet';
 import { Dice } from './dice/dice';
+import * as _ from 'lodash';
 
 export class CrapsTable {
-  public dice : Dice;
+  
+  public currentPoint: number
+
+  public dice: Dice;
   
   private _isPointOn: boolean = false;
   
@@ -26,8 +30,23 @@ export class CrapsTable {
 
   rollDice() : void {
     // Roll dice and resolve bets.
-    let dieValue = this.dice.roll();
-    this.resolveBets(dieValue);
+    let rollvalue = this.dice.roll();
+
+    // Resolve the bets
+    this.resolveBets(rollvalue);
+    
+    if (this._isPointOn) {
+      if (this.currentPoint === rollvalue) {
+        this._isPointOn = false;
+        this.currentPoint = undefined;
+      }
+    } else {
+      if (rollvalue >= 4 && rollvalue <= 6 || 
+        rollvalue >= 6 && rollvalue <=10) {
+        this._isPointOn = true;
+        this.currentPoint = rollvalue;
+      }
+    }
   }
   
   resolveBets(rollValue: number) {
