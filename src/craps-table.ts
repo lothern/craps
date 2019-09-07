@@ -65,7 +65,7 @@ export class CrapsTable {
       case 12:
         if(!this._isPointOn) {
           this._bets.forEach(bet => {
-            bet.lose(bet);
+            bet.lose();
           });
         }
         this._bets = [];
