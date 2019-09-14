@@ -11,10 +11,11 @@ export class CrapsTable {
   private _isPointOn: boolean = false;
   
   private _bets: Bet[] = [];
-  
+  bettors: ((table: CrapsTable) => void)[];
   
   constructor(){
     this.dice = new Dice();
+    this.bettors = [];
   }
   
   get isPointOn(): boolean {
@@ -29,6 +30,10 @@ export class CrapsTable {
     return this._bets;
   };
   
+  onPlaceBets(bettor: (table: CrapsTable) => void) {
+    this.bettors.push(bettor);
+  }
+
   getPlayerBets(playerId: string) : Bet[] {
     let playerBets = _.filter(this._bets, bet => {
       return bet.player == playerId;
