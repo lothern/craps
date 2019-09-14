@@ -1,7 +1,7 @@
 import { CrapsTable } from "../../src/craps-table";
 import { StackedDice } from "../dice/stacked-dice";
 
-export class TableTimeMachine {
+export class TableMaker {
   private table : CrapsTable;
   
   constructor(table? : CrapsTable) {
@@ -30,6 +30,6 @@ export class TableTimeMachine {
   }
 
   static getTable() {
-    return new TableTimeMachine();
+    return new TableMaker();
   }
 }
