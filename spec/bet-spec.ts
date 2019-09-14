@@ -1,7 +1,7 @@
 import { Bet, BetTypes } from "../src/bet";
 import { NumericDictionary } from "lodash";
 
-describe('bet', () => {
+describe('Bet', () => {
   it('should pay pass line only bets', () => {
     let bets = [1,10,15,20];
     let testBets = function(betAmount: number) {

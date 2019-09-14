@@ -1,5 +1,5 @@
 import { Bet } from './bet';
-import { Dice } from './dice/dice';
+import { Dice, LiveDice } from './dice/dice';
 import * as _ from 'lodash';
 
 export class CrapsTable {
@@ -14,7 +14,7 @@ export class CrapsTable {
   bettors: ((table: CrapsTable) => void)[];
   
   constructor(){
-    this.dice = new Dice();
+    this.dice = new LiveDice();
     this.bettors = [];
   }
   

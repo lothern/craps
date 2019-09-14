@@ -16,7 +16,7 @@ describe('craps game', () => {
 
   it('should register players', () => {
     let players = [Player.getPlayer()];
-    game.registerPlayers(players);
+    game.registerPlayers(players); 
     expect(game.players).toBeDefined();
     expect(game.players.length).toBe(1);
     // let player = game.players[0];
@@ -34,4 +34,5 @@ describe('craps game', () => {
     game.startGame();
     expect(game.table.bets.length).toBeGreaterThan(0);
   });
+
 })
