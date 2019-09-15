@@ -22,6 +22,10 @@ export class CrapsTable {
     return this._isPointOn;
   };
   
+  getLastRoll() {
+    return _.last(this.dice.rollHistory);
+  }
+
   placeBet(bet: Bet) : void {
     this._bets.push(bet);
   };

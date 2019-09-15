@@ -1,6 +1,7 @@
 import { CrapsTable } from '../src/craps-table';
 import { Bet } from '../src/bet';
 import { TableMaker } from './table-time-machine/table-maker';
+import * as _ from 'lodash';
 
 describe('CrapsGame', (): void => {
   let table : CrapsTable;
@@ -47,6 +48,21 @@ describe('CrapsGame', (): void => {
     crapsRolled(2);
     crapsRolled(3);
     crapsRolled(12);
+  });
+
+  it('should have the last roll', () => {
+    table = TableMaker.getTable().withRiggedDice(_.range(2, 13)).value();
+    
+    expect(table.getLastRoll()).toBeUndefined();
+
+    table.rollDice();
+    expect(table.getLastRoll()).toBe(2);
+    
+    table.rollDice();
+    expect(table.getLastRoll()).toBe(3);
+    
+    table.rollDice()
+    expect(table.getLastRoll()).toBe(4);
   });
 
   it('should set the point on when a 4,5,6,8,9,10 is rolled', () =>{
@@ -100,4 +116,7 @@ describe('CrapsGame', (): void => {
     expect(table.bets.length).toBe(0);
   });
 
+  xit('should pay out winning bets and leave them', () => {
+    fail('Need to implement this.')
+  });
 });

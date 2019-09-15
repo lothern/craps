@@ -2,6 +2,7 @@ import { CrapsTable } from "./craps-table";
 import { Player } from "./player";
 
 export class CrapsGame {
+  
  
   table : CrapsTable;
   players: Player[];
@@ -16,12 +17,16 @@ export class CrapsGame {
     newPlayers.forEach(player => {
       this.table.onPlaceBets(player.placeBets);
       this.players.push(player);
-    });
-    
+    }); 
   }
 
   startGame() : void {
     this.placeBets();
+  }
+
+  playHand() : void {
+    this.placeBets();
+    this.table.rollDice();
   }
 
   placeBets() : void {
@@ -29,5 +34,4 @@ export class CrapsGame {
       player.placeBets(this.table);
     });
   }
-  
 }
