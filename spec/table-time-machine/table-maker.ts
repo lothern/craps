@@ -1,5 +1,5 @@
 import { CrapsTable } from "../../src/craps-table";
-import { StackedDice } from "../dice/stacked-dice";
+import { RiggedDice } from "../dice/rigged-dice";
 
 export class TableMaker {
   private table : CrapsTable;
@@ -8,10 +8,10 @@ export class TableMaker {
     this.table = table || new CrapsTable();
   }
   
-  havingPoint(point: number) {
+  withPoint(point: number) {
     if((point >=4 && point <=6) || (point >=8 && point <= 10)) {
       let originalDice = this.table.dice;
-      let stackedDice = new StackedDice([point]);
+      let stackedDice = new RiggedDice([point]);
       this.table.dice = stackedDice;
       this.table.rollDice()
       this.table.dice = originalDice;
@@ -20,8 +20,8 @@ export class TableMaker {
     throw new RangeError(`${point} is an invalid point value. Valid values are 4, 5, 6, 8, 9, 10`);
   }
 
-  withStackedDice(stackedDiceRolls: number[]) {
-    this.table.dice = new StackedDice(stackedDiceRolls);
+  withRiggedDice(stackedDiceRolls: number[]) {
+    this.table.dice = new RiggedDice(stackedDiceRolls);
     return this;
   }
 

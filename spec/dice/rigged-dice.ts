@@ -1,6 +1,6 @@
 import { Dice } from "../../src/dice/dice";
 
-export class StackedDice extends Dice {
+export class RiggedDice extends Dice {
   
   rollQueue : number[];
 

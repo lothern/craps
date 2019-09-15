@@ -75,21 +75,24 @@ export class CrapsTable {
         }
         this._bets = [];
         break;
-      // case 7:
-      //   if(this._isPointOn) {
-      //     // Seven Out
-      //     this._bets.forEach(bet => {
-      //       bet.lose(bet);
-      //     });
-      //   } else {
-      //     // 7 on Comeout
-      //     this._bets.forEach(bet => {
-      //       bet.payOut = bet.amount;
-      //       bet.win(bet)
-      //     })
-      //   }
-      //   break;
+      case 7:
+        if(this._isPointOn) {
+          // Seven Out
+          this._bets.forEach(bet => {
+            bet.lose();
+          });
+        } else {
+          // 7 on Comeout
+          this._bets.forEach(bet => {
+            bet.payOut = bet.amount;
+            bet.win()
+          })
+        }
+        break;
     }
-  }
-;
+    // Remove zero'd out bets.
+    this._bets = _.filter(this._bets, bet => {
+      return bet.amount + bet.oddsAmount != 0;
+    });
+  };
 }

@@ -1,6 +1,6 @@
 import { Dice, LiveDice } from '../../src/dice/dice';
 import * as _ from 'lodash';
-import { StackedDice } from './stacked-dice';
+import { RiggedDice } from './rigged-dice';
 
 describe('Dice', ():void => {
 
@@ -27,7 +27,7 @@ describe('Dice', ():void => {
 
   it('should keep a roll history—all types.', () => {
     historyCheck(new LiveDice());
-    historyCheck(new StackedDice(_.range(2,13)));
+    historyCheck(new RiggedDice(_.range(2,13)));
   });
 
   describe('LiveDice', () => {

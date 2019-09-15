@@ -1,11 +1,11 @@
-import { StackedDice } from "./stacked-dice";
+import { RiggedDice } from "./rigged-dice";
 
-describe('StackedDice', () => {
-  let dice : StackedDice;
+describe('RiggedDice', () => {
+  let dice : RiggedDice;
 
   it('should return the values given it', () => {
     let stackedValues = [6, 5, 4, 3, 12, 2, 9];
-    dice = new StackedDice(stackedValues);
+    dice = new RiggedDice(stackedValues);
 
     let rolls : number[] = [];
 
@@ -17,7 +17,7 @@ describe('StackedDice', () => {
   });
 
   it('should allow you to add to rolls', () => {
-    dice = new StackedDice();
+    dice = new RiggedDice();
     expect(dice.rollQueue).toEqual([]);
 
     let desiredRoll = 6;

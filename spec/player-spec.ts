@@ -23,14 +23,18 @@ describe('Player', () => {
     expect(table.getPlayerBets(player.playerId).length). toBeGreaterThan(0);
   });
 
-  xit('should increase bankroll when bets are won', () => {
+  it('should increase bankroll when bets are won', () => {
     let table = new CrapsTable();
     let startingBankRoll = player.bankRoll;
 
     player.placeBets(table);
+
+    let postBetBankRoll = player.bankRoll;
+
     let playerBets = table.getPlayerBets(player.playerId);
     
     expect(playerBets.length).toBeGreaterThan(0);
+    expect(postBetBankRoll).toBeLessThan(startingBankRoll);
 
     // Simulate bet Win.
     let bet = playerBets[0];
@@ -39,6 +43,6 @@ describe('Player', () => {
 
     player.resolveHand(table);
 
-    expect(player.bankRoll).toBeGreaterThan(startingBankRoll);
+    expect(player.bankRoll).toBeGreaterThan(postBetBankRoll);
   });
 });

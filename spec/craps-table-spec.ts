@@ -1,5 +1,6 @@
 import { CrapsTable } from '../src/craps-table';
 import { Bet } from '../src/bet';
+import { TableMaker } from './table-time-machine/table-maker';
 
 describe('CrapsGame', (): void => {
   let table : CrapsTable;
@@ -83,6 +84,20 @@ describe('CrapsGame', (): void => {
     }
 
     points.forEach(pointSetAndMade);
+  });
+
+  it('should zero out and remove lost bets', () => {
+    let table = 
+      TableMaker.getTable().withPoint(6).withRiggedDice([7]).value();
+    let bet = new Bet(10, 'playerod');
+    spyOn(bet, 'lose').and.callThrough();
+    bet.oddsAmount = 50;
+    table.placeBet(bet);
+    table.rollDice();
+    expect(bet.lose).toHaveBeenCalled();
+    expect(bet.amount).toBe(0);
+    expect(bet.oddsAmount).toBe(0);
+    expect(table.bets.length).toBe(0);
   });
 
 });
