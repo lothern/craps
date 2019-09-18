@@ -1,5 +1,7 @@
 import { CrapsGame } from '../src/craps-game';
 import { Player } from '../src/player';
+import { TableMaker } from './table-maker/table-maker';
+import * as _ from 'lodash';
 
 describe('craps game', () => {
 
@@ -25,13 +27,16 @@ describe('craps game', () => {
   });
 
   it('should start the game and players should place bets', () => {
-    game.registerPlayers([new Player()]);
+    let player = new Player();
+    player.bankRoll = 1000;
+
+    game.registerPlayers([player]);
     
     // Confirm we have some players.
     expect(game.players.length).toBeGreaterThan(0);
 
     //Start the game, players should bet.
-    game.startGame();
+    game.startGame(1);
     expect(game.table.bets.length).toBeGreaterThan(0);
   });
 
@@ -53,8 +58,35 @@ describe('craps game', () => {
 
   });
 
-  xit('should stop the game when all players are out of money', () => {
-
+  it('should stop the game after x rolls', () => {
+    let player = new Player();
+    player.bankRoll = 100;
+    game.registerPlayers([player]);
+    spyOn(game, 'playHand').and.stub();
+    game.startGame(2);
+    expect(game.playHand).toHaveBeenCalledTimes(2);
   });
 
+  it('should indicate stop if no players have money', () => {
+    let player = new Player();
+    player.bankRoll = 10;
+  
+    expect(game.keepPlaying([player], 10)).toBe(true);
+
+    player.bankRoll = 0;
+    expect(game.keepPlaying([player], 10)).toBe(false);
+  });
+  
+  
+  it('should stop the game when all players are out of money', () => {
+    let player = new Player();
+    player.bankRoll = 10;
+    spyOn(game, 'playHand').and.callFake(() =>{
+      player.bankRoll = 0;
+    });
+    
+    game.registerPlayers([player]);
+    game.startGame(20);
+    expect(game.playHand).toHaveBeenCalledTimes(1);
+  });
 })

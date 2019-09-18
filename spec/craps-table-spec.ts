@@ -1,6 +1,6 @@
 import { CrapsTable } from '../src/craps-table';
 import { Bet } from '../src/bet';
-import { TableMaker } from './table-time-machine/table-maker';
+import { TableMaker } from './table-maker/table-maker';
 import * as _ from 'lodash';
 
 describe('CrapsGame', (): void => {
