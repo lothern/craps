@@ -105,7 +105,7 @@ describe('CrapsGame', (): void => {
   it('should zero out and remove lost bets', () => {
     let table = 
       TableMaker.getTable().withPoint(6).withRiggedDice([7]).value();
-    let bet = new Bet(10, 'playerod');
+    let bet = new Bet(10, 'player');
     spyOn(bet, 'lose').and.callThrough();
     bet.oddsAmount = 50;
     table.placeBet(bet);
@@ -116,7 +116,18 @@ describe('CrapsGame', (): void => {
     expect(table.bets.length).toBe(0);
   });
 
-  xit('should pay out winning bets and leave them', () => {
-    fail('Need to implement this.')
+  it('should callback won bets upon win', () => {
+    let table = TableMaker.getTable()
+      .withPoint(6)
+      .withRiggedDice([6]).value();
+    let bet = new Bet(10, 'player')
+    bet.point = 6;
+    spyOn(bet, 'win').and.stub();
+    table.placeBet(bet);
+    expect(table.currentPoint).toBe(6);
+    expect(table.bets.length).toBe(1)
+
+    table.rollDice();
+    expect(bet.win).toHaveBeenCalled();
   });
 });

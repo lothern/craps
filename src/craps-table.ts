@@ -88,11 +88,17 @@ export class CrapsTable {
         } else {
           // 7 on Comeout
           this._bets.forEach(bet => {
-            bet.payOut = bet.amount;
-            bet.win()
+            bet.win(this)
           })
         }
         break;
+    }
+
+    if (this.isPointOn && rollValue == this.currentPoint) {
+      this._bets.forEach(bet => {
+        bet.win(this);
+      })
+
     }
     // Remove zero'd out bets.
     this._bets = _.filter(this._bets, bet => {

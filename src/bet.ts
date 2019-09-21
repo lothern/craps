@@ -1,3 +1,6 @@
+import { CrapsTable } from "./craps-table";
+import { CrapsGame } from "./craps-game";
+
 export enum BetTypes {
   PassLine,
 };
@@ -24,14 +27,14 @@ export class Bet {
   }
 
   //Pays: 2:1 on 4, 10; 3:2 on 5, 9; 6:5 on 6,8
-  win() {
+  win(table : CrapsTable) {
     this.payOut = this.amount;
     if (this.point) {
-      this.payOut += Bet.computeOddsPayout(this);
+      this.payOut += Bet.computeOddsPayout(this, table);
     }
   }
 
-  static computeOddsPayout(bet: Bet): number {
+  static computeOddsPayout(bet: Bet, table : CrapsTable): number {
     if (!bet.oddsAmount) {
       return 0;
     }

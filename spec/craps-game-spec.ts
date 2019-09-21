@@ -3,7 +3,7 @@ import { Player } from '../src/player';
 import { TableMaker } from './table-maker/table-maker';
 import * as _ from 'lodash';
 
-describe('craps game', () => {
+describe('CrapsGame', () => {
 
   let game: CrapsGame;
 
