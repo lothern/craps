@@ -116,7 +116,7 @@ describe('CrapsGame', (): void => {
     expect(table.bets.length).toBe(0);
   });
 
-  it('should callback won bets upon win', () => {
+  it('should callback won bets upon making point', () => {
     let table = TableMaker.getTable()
       .withPoint(6)
       .withRiggedDice([6]).value();
@@ -129,5 +129,25 @@ describe('CrapsGame', (): void => {
 
     table.rollDice();
     expect(bet.win).toHaveBeenCalled();
+  });
+
+  it('should callback won bets on 7 if there is no point', ()  => {
+    let table = TableMaker.getTable().withRiggedDice([7]).value();
+    let bet = new Bet(10, 'player');
+    spyOn(bet, 'win').and.stub();
+    table.placeBet(bet);
+    expect(table.currentPoint).toBeUndefined();
+    table.rollDice();
+    expect(bet.win).toHaveBeenCalledWith(table);
+  });
+
+  it('should callback won bets on 11 if there is no point', ()  => {  
+    let table = TableMaker.getTable().withRiggedDice([11]).value();
+    let bet = new Bet(10, 'player');
+    spyOn(bet, 'win').and.stub();
+    table.placeBet(bet);
+    expect(table.currentPoint).toBeUndefined();
+    table.rollDice();
+    expect(bet.win).toHaveBeenCalledWith(table);
   });
 });

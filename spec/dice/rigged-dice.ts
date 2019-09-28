@@ -10,6 +10,9 @@ export class RiggedDice extends Dice {
   }
 
   doRoll() : number {
+    if (this.rollQueue.length == 0) {
+      throw new RangeError('Exceeded RiggedDice roll queue.');
+    }
     return this.rollQueue.shift();
   }
 

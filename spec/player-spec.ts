@@ -1,5 +1,7 @@
 import { Player } from '../src/player';
 import { CrapsTable } from '../src/craps-table';
+import { TableMaker } from './table-maker/table-maker';
+import { Bet } from '../src/bet';
 
 describe('Player', () => {
   
@@ -39,10 +41,35 @@ describe('Player', () => {
     // Simulate bet Win.
     let bet = playerBets[0];
     bet.point = 6;
-    bet.win();
+    bet.win(table);
 
     player.resolveHand(table);
 
     expect(player.bankRoll).toBeGreaterThan(postBetBankRoll);
+  });
+
+  it('should place a bet if there isn\'t one', () => {
+    let table = TableMaker.getTable().value();
+    expect(table.bets).toEqual([]);
+
+    player.placeBets(table);
+    expect(table.bets.length).toBe(1);
+
+    player.placeBets(table);
+    expect(table.bets.length).toBe(1);
+  });
+
+  it('should collect bet if there is a payout', () => {
+    let table = TableMaker.getTable().value();
+    player.bankRoll = 0;
+
+    let bet = new Bet(10, player.playerId);
+    bet.payOut = 10;
+    table.bets.push(bet);
+
+    player.resolveHand(table);
+
+    expect(player.bankRoll).toBe(10 + 10);
+    
   });
 });

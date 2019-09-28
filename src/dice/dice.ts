@@ -10,11 +10,6 @@ export abstract class Dice {
   }
 
   protected abstract doRoll() : number;
-
-  turtle() : void {
-
-  }
-
 }
 
 export class LiveDice extends Dice {

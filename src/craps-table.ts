@@ -46,6 +46,10 @@ export class CrapsTable {
   }
 
   rollDice() : void {
+
+    // TODO: Add player table load logging right before dice roll.
+    // How much each player has on the table (# of bets and total amount)
+      
     // Roll dice and resolve bets.
     let rollvalue = this.dice.roll();
 
@@ -90,6 +94,14 @@ export class CrapsTable {
           this._bets.forEach(bet => {
             bet.win(this)
           })
+        }
+        break;
+      case 11:
+        if (!this._isPointOn) {
+          // 11 on Comeout
+          this._bets.forEach(bet => {
+            bet.win(this);
+          });
         }
         break;
     }

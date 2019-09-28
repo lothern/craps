@@ -21,24 +21,31 @@ export class CrapsGame {
   }
 
   startGame(rollsToPlay : number) : void {
-    while (this.keepPlaying(this.players, rollsToPlay)) {
+    while (this.keepPlaying(this.players, this.table, rollsToPlay)) {
       this.playHand();
       rollsToPlay--;
     } 
   }
 
-  keepPlaying(players : Player[], rollsToPlay : number) : boolean {
+  keepPlaying(players: Player[], table: CrapsTable, rollsToPlay : number) : boolean {
+    // Do we have unresolved bets?
+    let haveBets = table.bets.length > 0;
+
     // Look for one player for money.
     let playerWithMoney = _.find(players, player => {
       return player.bankRoll > 0;
     });
 
-    return !!playerWithMoney && rollsToPlay > 0;
+    let output = (haveBets || !!playerWithMoney) && rollsToPlay > 0;
+    return output;
   }
 
   playHand() : void {
     this.placeBets();
     this.table.rollDice();
+    this.players.forEach(player => {
+      player.resolveHand(this.table);
+    })
   }
 
   placeBets() : void {

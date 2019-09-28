@@ -97,4 +97,12 @@ describe('Bet', () => {
     bet.win(table);
     expect(bet.payOut).toBe(10);
   });
+
+  it('should pay even money on 7/11', ()  => {
+    let table = TableMaker.getTable().value();
+    let bet = new Bet(10, 'player');
+    bet.win(table);
+
+    expect(bet.payOut).toBe(10);
+  });
 });

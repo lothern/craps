@@ -30,4 +30,13 @@ describe('RiggedDice', () => {
     expect(dice.roll()).toBe(desiredRoll);
     expect(dice.roll()).toBe(theOneAfter);
   });
+
+  it('should throw an error if you overrun the queue', () => {
+    let rollQueue = [2,3];
+    dice = new RiggedDice(rollQueue);
+    dice.roll();
+    dice.roll();
+    expect(dice.rollQueue.length).toBe(0);
+    expect(dice.roll).toThrowError();
+  });
 });
