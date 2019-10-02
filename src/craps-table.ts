@@ -57,13 +57,14 @@ export class CrapsTable {
     this.resolveBets(rollvalue);
     
     if (this._isPointOn) {
-      if (this.currentPoint === rollvalue) {
+      if (this.currentPoint === rollvalue 
+        || rollvalue === 7) {
         this._isPointOn = false;
         this.currentPoint = undefined;
-      }
+      } 
     } else {
       if (rollvalue >= 4 && rollvalue <= 6 || 
-        rollvalue >= 6 && rollvalue <=10) {
+        rollvalue >= 8 && rollvalue <=10) {
         this._isPointOn = true;
         this.currentPoint = rollvalue;
       }

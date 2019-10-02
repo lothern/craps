@@ -102,6 +102,18 @@ describe('CrapsGame', (): void => {
     points.forEach(pointSetAndMade);
   });
 
+  it('should clear the point when a 7 is rolled', () => {
+    let table = TableMaker.getTable().withRiggedDice([7]).withPoint(10).value();
+    expect(table.isPointOn).toBe(true);
+    expect(table.currentPoint).toBe(10);
+
+    table.rollDice();
+
+    expect(table.getLastRoll()).toBe(7);
+    expect(table.isPointOn).toBe(false);
+    expect(table.currentPoint).toBeUndefined();
+  })
+
   it('should zero out and remove lost bets', () => {
     let table = 
       TableMaker.getTable().withPoint(6).withRiggedDice([7]).value();
