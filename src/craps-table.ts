@@ -19,8 +19,15 @@ export class CrapsTable {
   }
   
   get isPointOn(): boolean {
-    return this._isPointOn;
+    return this.checkPointIsOn();
   };
+
+  private checkPointIsOn() : boolean {
+    if (this.currentPoint == undefined) {
+      return false;
+    }
+    return true;
+  }
   
   getLastRoll() {
     return _.last(this.dice.rollHistory);
@@ -56,16 +63,14 @@ export class CrapsTable {
     // Resolve the bets
     this.resolveBets(rollvalue);
     
-    if (this._isPointOn) {
+    if (this.checkPointIsOn()) {
       if (this.currentPoint === rollvalue 
         || rollvalue === 7) {
-        this._isPointOn = false;
         this.currentPoint = undefined;
       } 
     } else {
       if (rollvalue >= 4 && rollvalue <= 6 || 
         rollvalue >= 8 && rollvalue <=10) {
-        this._isPointOn = true;
         this.currentPoint = rollvalue;
       }
     }
@@ -77,7 +82,7 @@ export class CrapsTable {
       case 2:
       case 3:
       case 12:
-        if(!this._isPointOn) {
+        if(!this.checkPointIsOn()) {
           this._bets.forEach(bet => {
             bet.lose();
           });
@@ -85,7 +90,7 @@ export class CrapsTable {
         this._bets = [];
         break;
       case 7:
-        if(this._isPointOn) {
+        if(this.checkPointIsOn()) {
           // Seven Out
           this._bets.forEach(bet => {
             bet.lose();
@@ -98,7 +103,7 @@ export class CrapsTable {
         }
         break;
       case 11:
-        if (!this._isPointOn) {
+        if (!this.checkPointIsOn()) {
           // 11 on Comeout
           this._bets.forEach(bet => {
             bet.win(this);
