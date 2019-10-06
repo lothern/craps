@@ -22,7 +22,7 @@ export class CrapsTable {
     return !(this.currentPoint == undefined);
   };
 
-  getLastRoll() : number {
+  getLastRoll(): number {
     return _.last(this.dice.rollHistory);
   }
 
@@ -56,7 +56,7 @@ export class CrapsTable {
     // Resolve the bets
     this.resolveBets(rollvalue);
 
-    // 
+    // 'Handle' the on/off puck table state.
     if (this.isPointOn) {
       if (this.currentPoint === rollvalue
         || rollvalue === 7) {
@@ -72,49 +72,13 @@ export class CrapsTable {
 
   resolveBets(rollValue: number) {
 
-    switch (rollValue) {
-      case 2:
-      case 3:
-      case 12:
-        if (!this.isPointOn) {
-          this._bets.forEach(bet => {
-            bet.lose();
-          });
-        }
-        this._bets = [];
-        break;
-      case 7:
-        if (this.isPointOn) {
-          // Seven Out
-          this._bets.forEach(bet => {
-            bet.lose();
-          });
-        } else {
-          // 7 on Comeout
-          this._bets.forEach(bet => {
-            bet.win(this)
-          })
-        }
-        break;
-      case 11:
-        if (!this.isPointOn) {
-          // 11 on Comeout
-          this._bets.forEach(bet => {
-            bet.win(this);
-          });
-        }
-        break;
-    }
+    this._bets.forEach(bet => {
+      bet.evaluateDiceRoll(rollValue, this);
+    });
 
-    if (this.isPointOn && rollValue == this.currentPoint) {
-      this._bets.forEach(bet => {
-        bet.win(this);
-      })
-
-    }
     // Remove zero'd out bets.
     this._bets = _.filter(this._bets, bet => {
       return bet.amount + bet.oddsAmount != 0;
     });
-  };
+  }
 }
