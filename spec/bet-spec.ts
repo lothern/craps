@@ -1,4 +1,4 @@
-import { PassLineBet, BetTypes } from "../src/bet";
+import { PassLineBet, BetTypes } from "../src/pass-line-bet";
 import { NumericDictionary } from "lodash";
 import { TableMaker } from "./table-maker/table-maker";
 
