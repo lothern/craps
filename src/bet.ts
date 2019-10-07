@@ -1,5 +1,5 @@
 import { CrapsTable } from "./craps-table";
-import { IBet } from "./ibet";
+import { BetBase } from "./bet-base";
 
 export enum BetTypes {
   PassLine,
@@ -8,17 +8,12 @@ export enum BetTypes {
 /**
  *  Pass line or come line bet
  */
-export class PassLineBet implements IBet {
+export class PassLineBet extends BetBase {
 
-  amount: number = 0;
-  payOut: number;
-  player: string;
   oddsAmount: number = 0;
-  point: number = undefined;
 
   constructor(amount: number, playerId: string) {
-    this.amount = amount;
-    this.player = playerId;
+    super(amount, playerId);
   }
 
   lose() {
