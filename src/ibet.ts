@@ -4,6 +4,7 @@ export interface IBet {
   amount : number;
   player: string;
   payOut : number;
+  point : number;
 
   evaluateDiceRoll(rollValue: number, table: CrapsTable) : void; 
   win(table : CrapsTable) : void;

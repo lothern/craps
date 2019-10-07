@@ -32,13 +32,14 @@ describe('CrapsGame', () => {
     player.bankRoll = 1000;
 
     game.registerPlayers([player]);
+    spyOn(game.table, 'placeBet').and.stub();
 
     // Confirm we have some players.
     expect(game.players.length).toBeGreaterThan(0);
 
     //Start the game, players should bet.
     game.startGame(1);
-    expect(game.table.bets.length).toBeGreaterThan(0);
+    expect(game.table.placeBet).toHaveBeenCalled();
   });
 
   it('should play one hand (roll)', () => {
