@@ -1,7 +1,7 @@
 import { PassLineBet } from './bets/pass-line-bet';
 import { Dice, LiveDice } from './dice/dice';
 import * as _ from 'lodash';
-import { BetBase } from './bet-base';
+import {BaseBet } from './base-bet';
 
 export class CrapsTable {
 
@@ -11,7 +11,7 @@ export class CrapsTable {
 
   private _isPointOn: boolean = false;
 
-  private _bets: BetBase[] = [];
+  private _bets: BaseBet[] = [];
   bettors: ((table: CrapsTable) => void)[];
 
   constructor() {
@@ -31,7 +31,7 @@ export class CrapsTable {
     this._bets.push(bet);
   };
 
-  get bets(): BetBase[] {
+  get bets(): BaseBet[] {
     return this._bets;
   };
 
@@ -39,7 +39,7 @@ export class CrapsTable {
     this.bettors.push(bettor);
   }
 
-  getPlayerBets(playerId: string): BetBase[] {
+  getPlayerBets(playerId: string): BaseBet[] {
     let playerBets = _.filter(this._bets, bet => {
       return bet.player == playerId;
     });

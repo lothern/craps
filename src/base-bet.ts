@@ -6,7 +6,7 @@ export enum BetTypes {
   COME
 }
 
-export abstract class BetBase {
+export abstract class BaseBet {
   betType : BetTypes = BetTypes.UNKNOWN;
   amount : number;
   player: string;

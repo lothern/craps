@@ -1,10 +1,10 @@
 import { CrapsTable } from "../craps-table";
-import { BetBase, BetTypes } from "../bet-base";
+import { BaseBet, BetTypes } from "../base-bet";
 
 /**
  *  Pass line or come line bet
  */
-export class PassLineBet extends BetBase {
+export class PassLineBet extends BaseBet {
 
   oddsAmount: number = 0;
 

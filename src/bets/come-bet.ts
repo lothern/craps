@@ -1,5 +1,5 @@
 import { PassLineBet } from "./pass-line-bet";
-import { BetTypes } from "../bet-base";
+import { BetTypes } from "../base-bet";
 
 export class ComeBet extends PassLineBet{
   constructor(amount : number, playerId : string) {
