@@ -1,5 +1,5 @@
 import { CrapsTable } from "./craps-table";
-import { Bet } from "./bet";
+import { PassLineBet } from "./bet";
 
 export class Player {
   playerId: string;
@@ -16,7 +16,7 @@ export class Player {
       let betAmount = 10;
 
       this.bankRoll = this.bankRoll - betAmount;
-      let bet = new Bet(betAmount, this.playerId);
+      let bet = new PassLineBet(betAmount, this.playerId);
 
       table.placeBet(bet);
     }

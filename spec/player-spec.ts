@@ -1,7 +1,7 @@
 import { Player } from '../src/player';
 import { CrapsTable } from '../src/craps-table';
 import { TableMaker } from './table-maker/table-maker';
-import { Bet } from '../src/bet';
+import { PassLineBet } from '../src/bet';
 
 describe('Player', () => {
   
@@ -63,7 +63,7 @@ describe('Player', () => {
     let table = TableMaker.getTable().value();
     player.bankRoll = 0;
 
-    let bet = new Bet(10, player.playerId);
+    let bet = new PassLineBet(10, player.playerId);
     bet.payOut = 10;
     table.bets.push(bet);
 

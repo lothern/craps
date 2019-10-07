@@ -1,5 +1,5 @@
 import { CrapsTable } from '../src/craps-table';
-import { Bet } from '../src/bet';
+import { PassLineBet } from '../src/bet';
 import { TableMaker } from './table-maker/table-maker';
 import * as _ from 'lodash';
 
@@ -26,21 +26,21 @@ describe('CrapsGame', (): void => {
   
   it('should allow you to place a pass line bet', () => {
     expect(table.bets.length).toBe(0);
-    table.placeBet(new Bet(1, ''));
+    table.placeBet(new PassLineBet(1, ''));
     expect(table.bets.length).toBe(1);
   });
 
   it('should be able to returns bets by player', () => {
     let pid1 = 'player1'
-    let betP1 = new Bet(1, pid1);
+    let betP1 = new PassLineBet(1, pid1);
     table.placeBet(betP1);
-    table.placeBet(new Bet(2, 'player2'))
+    table.placeBet(new PassLineBet(2, 'player2'))
     expect(table.getPlayerBets(pid1)).toEqual([betP1]);
   });
 
   it('should take bets on 2,3,12 when point is off', ()=> {
     let crapsRolled = function(rollValue : number) {
-      table.placeBet(new Bet(1, ''));
+      table.placeBet(new PassLineBet(1, ''));
       table.resolveBets(rollValue);
       expect(table.bets.length).toBe(0);
     }
@@ -71,7 +71,7 @@ describe('CrapsGame', (): void => {
       table = getNewTable();
       expect(table.isPointOn).toBe(false);
       expect(table.currentPoint).toBeUndefined();
-      table.placeBet(new Bet(1, ''));
+      table.placeBet(new PassLineBet(1, ''));
       spyOn(table.dice, 'roll').and.returnValue(rollValue);
       table.rollDice();
       expect(table.isPointOn).toBe(true);
@@ -117,7 +117,7 @@ describe('CrapsGame', (): void => {
   it('should zero out and remove lost bets', () => {
     let table = 
       TableMaker.getTable().withPoint(6).withRiggedDice([7]).value();
-    let bet = new Bet(10, 'player');
+    let bet = new PassLineBet(10, 'player');
     spyOn(bet, 'lose').and.callThrough();
     bet.oddsAmount = 50;
     table.placeBet(bet);
@@ -132,7 +132,7 @@ describe('CrapsGame', (): void => {
     let table = TableMaker.getTable()
       .withPoint(6)
       .withRiggedDice([6]).value();
-    let bet = new Bet(10, 'player')
+    let bet = new PassLineBet(10, 'player')
     bet.point = 6;
     spyOn(bet, 'win').and.stub();
     table.placeBet(bet);
@@ -145,7 +145,7 @@ describe('CrapsGame', (): void => {
 
   it('should callback won bets on 7 if there is no point', ()  => {
     let table = TableMaker.getTable().withRiggedDice([7]).value();
-    let bet = new Bet(10, 'player');
+    let bet = new PassLineBet(10, 'player');
     spyOn(bet, 'win').and.stub();
     table.placeBet(bet);
     expect(table.currentPoint).toBeUndefined();
@@ -155,7 +155,7 @@ describe('CrapsGame', (): void => {
 
   it('should callback won bets on 11 if there is no point', ()  => {  
     let table = TableMaker.getTable().withRiggedDice([11]).value();
-    let bet = new Bet(10, 'player');
+    let bet = new PassLineBet(10, 'player');
     spyOn(bet, 'win').and.stub();
     table.placeBet(bet);
     expect(table.currentPoint).toBeUndefined();

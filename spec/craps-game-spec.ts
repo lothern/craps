@@ -2,7 +2,7 @@ import { CrapsGame } from '../src/craps-game';
 import { Player } from '../src/player';
 import { TableMaker } from './table-maker/table-maker';
 import * as _ from 'lodash';
-import { Bet } from '../src/bet';
+import { PassLineBet } from '../src/bet';
 
 describe('CrapsGame', () => {
 
@@ -103,7 +103,7 @@ describe('CrapsGame', () => {
       player.bankRoll = 0;
       game.registerPlayers([player]);
 
-      let bet = new Bet(10, player.playerId);
+      let bet = new PassLineBet(10, player.playerId);
       bet.point = 5;
 
       let table = TableMaker

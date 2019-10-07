@@ -1,5 +1,5 @@
 import { CrapsTable } from "./craps-table";
-import { CrapsGame } from "./craps-game";
+import { IBet } from "./ibet";
 
 export enum BetTypes {
   PassLine,
@@ -8,7 +8,7 @@ export enum BetTypes {
 /**
  *  Pass line or come line bet
  */
-export class Bet {
+export class PassLineBet implements IBet {
 
   amount: number = 0;
   payOut: number;
@@ -58,20 +58,18 @@ export class Bet {
           }
           break;
       }
-
     }
-
   }
 
   //Pays: 2:1 on 4, 10; 3:2 on 5, 9; 6:5 on 6,8
   win(table: CrapsTable) {
     this.payOut = this.amount;
     if (this.point) {
-      this.payOut += Bet.computeOddsPayout(this, table);
+      this.payOut += PassLineBet.computeOddsPayout(this, table);
     }
   }
 
-  static computeOddsPayout(bet: Bet, table: CrapsTable): number {
+  static computeOddsPayout(bet: PassLineBet, table: CrapsTable): number {
     if (!bet.oddsAmount) {
       return 0;
     }
