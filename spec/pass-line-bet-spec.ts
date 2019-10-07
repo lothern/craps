@@ -1,8 +1,7 @@
-import { PassLineBet, BetTypes } from "../src/pass-line-bet";
-import { NumericDictionary } from "lodash";
+import { PassLineBet } from "../src/bets/pass-line-bet";
 import { TableMaker } from "./table-maker/table-maker";
 
-describe('Bet', () => {
+describe('PassLineBet', () => {
   it('should pay pass line only bets', () => {
     let bets = [1,10,15,20];
     let testBets = function(betAmount: number) {
@@ -16,7 +15,6 @@ describe('Bet', () => {
   });
  
   it('should compute odds payout based on point', () => {
-    let point: number = 6;
     let betAmount = 10;
     let oddsAmount = 20;
 

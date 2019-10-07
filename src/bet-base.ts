@@ -1,12 +1,20 @@
 import { CrapsTable } from "./craps-table";
 
+export enum BetTypes {
+  UNKNOWN,
+  PASS_LINE,
+  COME
+}
+
 export abstract class BetBase {
+  betType : BetTypes = BetTypes.UNKNOWN;
   amount : number;
   player: string;
   payOut : number;
   point : number;
 
-  constructor(amount: number, playerId: string) {
+  constructor(betType : BetTypes, amount: number, playerId: string) {
+    this.betType = betType;
     this.amount = amount
     this.player = playerId;
   }

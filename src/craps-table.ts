@@ -1,4 +1,4 @@
-import { PassLineBet } from './pass-line-bet';
+import { PassLineBet } from './bets/pass-line-bet';
 import { Dice, LiveDice } from './dice/dice';
 import * as _ from 'lodash';
 import { BetBase } from './bet-base';

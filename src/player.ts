@@ -1,5 +1,5 @@
 import { CrapsTable } from "./craps-table";
-import { PassLineBet } from "./pass-line-bet";
+import { PassLineBet } from "./bets/pass-line-bet";
 
 export class Player {
   playerId: string;

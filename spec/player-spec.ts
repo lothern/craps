@@ -1,7 +1,7 @@
 import { Player } from '../src/player';
 import { CrapsTable } from '../src/craps-table';
 import { TableMaker } from './table-maker/table-maker';
-import { PassLineBet } from '../src/pass-line-bet';
+import { PassLineBet } from '../src/bets/pass-line-bet';
 
 describe('Player', () => {
   

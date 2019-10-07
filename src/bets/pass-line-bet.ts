@@ -1,9 +1,5 @@
-import { CrapsTable } from "./craps-table";
-import { BetBase } from "./bet-base";
-
-export enum BetTypes {
-  PassLine,
-};
+import { CrapsTable } from "../craps-table";
+import { BetBase, BetTypes } from "../bet-base";
 
 /**
  *  Pass line or come line bet
@@ -13,7 +9,7 @@ export class PassLineBet extends BetBase {
   oddsAmount: number = 0;
 
   constructor(amount: number, playerId: string) {
-    super(amount, playerId);
+    super(BetTypes.PASS_LINE, amount, playerId);
   }
 
   lose() {

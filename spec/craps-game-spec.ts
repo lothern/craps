@@ -2,7 +2,7 @@ import { CrapsGame } from '../src/craps-game';
 import { Player } from '../src/player';
 import { TableMaker } from './table-maker/table-maker';
 import * as _ from 'lodash';
-import { PassLineBet } from '../src/pass-line-bet';
+import { PassLineBet } from '../src/bets/pass-line-bet';
 
 describe('CrapsGame', () => {
 
