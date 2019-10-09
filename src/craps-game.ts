@@ -31,12 +31,16 @@ export class CrapsGame {
     // Do we have unresolved bets?
     let haveBets = table.bets.length > 0;
 
-    // Look for one player for money.
-    let playerWithMoney = _.find(players, player => {
-      return player.bankRoll > 0;
+    // Look for one player with money.
+    let playerBankroll = 0;
+    players.forEach(player => {
+      playerBankroll += player.bankRoll;
     });
 
-    let output = (haveBets || !!playerWithMoney) && rollsToPlay > 0;
+    // Keep playing if we have bets OR there are rolls to play and players
+    // who have money to bet.
+    let output = haveBets || (rollsToPlay > 0 && playerBankroll > 0);
+
     return output;
   }
 

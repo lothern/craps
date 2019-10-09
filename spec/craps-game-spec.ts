@@ -12,11 +12,6 @@ describe('CrapsGame', () => {
     game = new CrapsGame();
   });
 
-  it('should instance a craps table', () => {
-    expect(game).toBeDefined();
-    expect(game.table).toBeDefined();
-  });
-
   it('should register players', () => {
     let players = [Player.getPlayer()];
     game.registerPlayers(players);
@@ -62,6 +57,58 @@ describe('CrapsGame', () => {
 
   });
 
+  describe('KeepPlaying', () => {
+    let player: Player;
+
+    beforeEach(() => {
+      player = new Player();
+    });
+
+    it('should indicate stop playing when rolls are up and no bets', () => {
+      player.bankRoll = 1;
+      expect(game.table.bets).toEqual([])
+      expect(game.keepPlaying([player], game.table, 0)).toBe(false);
+    });
+
+    it('should indicate keep playing when roll count expired but bets are unresolved', () => {
+      player.bankRoll = 0;
+      let bet = new PassLineBet(10, player.playerId);
+      game.table.placeBet(bet);
+      expect(game.table.bets).toEqual([bet]);
+      expect(game.keepPlaying([player], game.table, 0)).toBe(true);
+    });
+
+
+    it('should indicate stop if no players have money', () => {
+      // This tests the keepPlaying method which should REALLY
+      // be private.
+      let table = TableMaker.getTable().value();
+      let player = new Player();
+      player.bankRoll = 10;
+
+      expect(game.keepPlaying([player], table, 10)).toBe(true);
+
+      player.bankRoll = 0;
+      expect(game.keepPlaying([player], table, 10)).toBe(false);
+    });
+
+    it('should indicate keep playing if there are unresolved bets', () => {
+      // This tests the keepPlaying method which should REALLY
+      // be private.
+      let player = new Player();
+      let bet = new PassLineBet(10, player.playerId);
+      game.table.placeBet(bet);
+
+      player.bankRoll = 0;
+
+      expect(game.keepPlaying([player], game.table, 10)).toBe(true);
+
+      // Should work regardless of bankroll
+      player.bankRoll = 10;
+      expect(game.keepPlaying([player], game.table, 10)).toBe(true);
+    });
+  });
+
   it('should stop the game after x rolls', () => {
     let player = new Player();
     player.bankRoll = 100;
@@ -69,20 +116,6 @@ describe('CrapsGame', () => {
     spyOn(game, 'playHand').and.stub();
     game.startGame(2);
     expect(game.playHand).toHaveBeenCalledTimes(2);
-  });
-
-  
-  it('should indicate stop if no players have money', () => {
-    // This tests the keepPlaying method which should REALLY
-    // be private.
-    let table = TableMaker.getTable().value();
-    let player = new Player();
-    player.bankRoll = 10;
-
-    expect(game.keepPlaying([player], table, 10)).toBe(true);
-
-    player.bankRoll = 0;
-    expect(game.keepPlaying([player], table, 10)).toBe(false);
   });
 
 
@@ -124,4 +157,26 @@ describe('CrapsGame', () => {
       expect(game.playHand).toHaveBeenCalledTimes(3);
       expect(table.rollDice).toHaveBeenCalledTimes(3);
     });
+
+  it('should resolve all bets even if hand limit has passed', () => {
+    let player = new Player();
+    player.bankRoll = 0;
+    game.registerPlayers([player]);
+
+    let bet = new PassLineBet(10, player.playerId);
+
+    let diceRolls = [6, 8, 12, 2, 7];
+
+    let table = TableMaker.getTable()
+      .withPoint(5)
+      .withRiggedDice(diceRolls)
+      .value();
+    game.table = table;
+    table.placeBet(bet)
+
+    spyOn(game, 'playHand').and.callThrough();
+    game.startGame(1);
+
+    expect(game.playHand).toHaveBeenCalledTimes(5);
+  })
 })

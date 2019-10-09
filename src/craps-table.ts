@@ -1,4 +1,3 @@
-import { PassLineBet } from './bets/pass-line-bet';
 import { Dice, LiveDice } from './dice/dice';
 import * as _ from 'lodash';
 import {BaseBet } from './base-bet';
@@ -27,7 +26,7 @@ export class CrapsTable {
     return _.last(this.dice.rollHistory);
   }
 
-  placeBet(bet: PassLineBet): void {
+  placeBet(bet: BaseBet): void {
     this._bets.push(bet);
   };
 
