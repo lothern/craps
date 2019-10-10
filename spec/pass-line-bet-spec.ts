@@ -1,13 +1,12 @@
-import { Bet, BetTypes } from "../src/bet";
-import { NumericDictionary } from "lodash";
+import { PassLineBet } from "../src/bets/pass-line-bet";
 import { TableMaker } from "./table-maker/table-maker";
 
-describe('Bet', () => {
+describe('PassLineBet', () => {
   it('should pay pass line only bets', () => {
     let bets = [1,10,15,20];
     let testBets = function(betAmount: number) {
       let table = TableMaker.getTable().value();
-      let passLineBet = new Bet(betAmount, 'player1');
+      let passLineBet = new PassLineBet(betAmount, 'player1');
       passLineBet.oddsAmount = 0;
       passLineBet.win(table);
       expect(passLineBet.payOut).toBe(betAmount);
@@ -16,16 +15,15 @@ describe('Bet', () => {
   });
  
   it('should compute odds payout based on point', () => {
-    let point: number = 6;
     let betAmount = 10;
     let oddsAmount = 20;
 
     let testOddsPay = function(point: number, payOut: number) {
-      let bet = new Bet(betAmount, 'player1');
+      let bet = new PassLineBet(betAmount, 'player1');
       let table = TableMaker.getTable().withPoint(point).value();
       bet.oddsAmount = oddsAmount;
       bet.point = point;
-      expect(Bet.computeOddsPayout(bet, table)).toBe(payOut);
+      expect(PassLineBet.computeOddsPayout(bet, table)).toBe(payOut);
     }
 
     // 6:5 odds payout.
@@ -42,7 +40,7 @@ describe('Bet', () => {
   })
 
   it('should payout for a 6 or 8', () => {
-    let bet = new Bet(10, 'player1');
+    let bet = new PassLineBet(10, 'player1');
     let table = TableMaker.getTable().withPoint(6).value();
     bet.point = 6;
     bet.oddsAmount = 20;
@@ -56,7 +54,7 @@ describe('Bet', () => {
   });
 
   it('should payout for a 5 or 9', () => {
-    let bet = new Bet(10, 'player1');
+    let bet = new PassLineBet(10, 'player1');
     let table = TableMaker.getTable().withPoint(5).value();
     bet.point = 5;
     bet.oddsAmount = 20;
@@ -70,7 +68,7 @@ describe('Bet', () => {
   });
   
   it('should payout for a 4 or 10', () => {
-    let bet = new Bet(10, 'player1');
+    let bet = new PassLineBet(10, 'player1');
     let table = TableMaker.getTable().withPoint(10).value();
     bet.point = 4;
     bet.oddsAmount = 20;
@@ -84,14 +82,14 @@ describe('Bet', () => {
   });
 
   it('should zero out a bet when loses', () => {
-    let bet = new Bet(10, 'player1');
+    let bet = new PassLineBet(10, 'player1');
     bet.lose()
     expect(bet.amount).toBe(0);
     expect(bet.oddsAmount).toBe(0);
   });
 
   it('should NOT payout odds if there is no point', () => {
-    let bet = new Bet(10, 'player1');
+    let bet = new PassLineBet(10, 'player1');
     let table = TableMaker.getTable().withPoint(10).value();
     bet.oddsAmount = 20;
     bet.win(table);
@@ -100,7 +98,7 @@ describe('Bet', () => {
 
   it('should pay even money on 7/11', ()  => {
     let table = TableMaker.getTable().value();
-    let bet = new Bet(10, 'player');
+    let bet = new PassLineBet(10, 'player');
     bet.win(table);
 
     expect(bet.payOut).toBe(10);
