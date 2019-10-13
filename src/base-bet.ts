@@ -19,6 +19,7 @@ export abstract class BaseBet {
     this.player = playerId;
   }
 
+  // static isOkayToPlace() : boolean
   abstract evaluateDiceRoll(rollValue: number, table: CrapsTable) : void; 
   abstract win(table : CrapsTable) : void;
   abstract lose(): void;

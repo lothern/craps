@@ -13,6 +13,14 @@ describe('PassLineBet', () => {
     }
     bets.forEach(testBets);
   });
+
+  it('should indicate okToPlace only when the point is off', () =>{
+    let table = TableMaker.getTable().withPoint(10).value();
+    expect(PassLineBet.isOkayToPlace(table)).toBe(false);
+
+    table = TableMaker.getTable().value();
+    expect(PassLineBet.isOkayToPlace(table)).toBe(true);
+  });
  
   it('should compute odds payout based on point', () => {
     let betAmount = 10;
@@ -37,7 +45,7 @@ describe('PassLineBet', () => {
     // 2:1 odds payout.
     testOddsPay(4, 40);
     testOddsPay(10, 40);
-  })
+  });
 
   it('should payout for a 6 or 8', () => {
     let bet = new PassLineBet(10, 'player1');

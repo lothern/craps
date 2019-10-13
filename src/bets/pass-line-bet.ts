@@ -12,11 +12,20 @@ export class PassLineBet extends BaseBet {
     super(BetTypes.PASS_LINE, amount, playerId);
   }
 
+  static isOkayToPlace(table: CrapsTable): boolean {
+    let plb = new PassLineBet(1,'dummy');
+    return plb.isOkayToPlace(table)
+  }
+  
   lose() {
     // Zero out the bet anticipating the table will remove 
     // zero amount bets.
     this.amount = 0;
     this.oddsAmount = 0;
+  }
+
+  isOkayToPlace(table: CrapsTable): boolean {
+    return !table.isPointOn;
   }
 
   evaluateDiceRoll(rollValue: number, table: CrapsTable) {
