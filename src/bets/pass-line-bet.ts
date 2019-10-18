@@ -1,5 +1,5 @@
 import { CrapsTable } from "../craps-table";
-import { BaseBet, BetTypes } from "../base-bet";
+import { BaseBet, BetTypes } from "./base-bet";
 
 /**
  *  Pass line or come line bet

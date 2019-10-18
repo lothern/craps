@@ -1,5 +1,5 @@
 import { PassLineBet } from "./pass-line-bet";
-import { BetTypes } from "../base-bet";
+import { BetTypes } from "./base-bet";
 import { CrapsTable } from "../craps-table";
 
 export class ComeBet extends PassLineBet{

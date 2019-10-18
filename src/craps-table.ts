@@ -1,6 +1,6 @@
 import { Dice, LiveDice } from './dice/dice';
 import * as _ from 'lodash';
-import {BaseBet } from './base-bet';
+import {BaseBet } from './bets/base-bet';
 
 export class CrapsTable {
 

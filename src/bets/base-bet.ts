@@ -1,4 +1,4 @@
-import { CrapsTable } from "./craps-table";
+import { CrapsTable } from "../craps-table";
 
 export enum BetTypes {
   UNKNOWN,
