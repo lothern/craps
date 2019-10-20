@@ -1,31 +1,35 @@
 import { CrapsTable } from "./craps-table";
 import { PassLineBet } from "./bets/pass-line-bet";
+import { Strategy } from "./strategy";
 import { BaseBet } from "./bets/base-bet";
 
 export class Player {
   playerId: string;
   bankRoll: number;
+  strategy: Strategy = new Strategy();
 
   constructor() {
     this.playerId = Date.now().toString();
   }
 
   placeBets(table: CrapsTable): void {
-    let myBets = table.getPlayerBets(this.playerId);
+    let myBets: BaseBet[] = table.getPlayerBets(this.playerId);
 
-    if (myBets.length == 0) {
-      let betAmount = 10;
+    let missingBets = this.strategy.getBetsToPlace(myBets);
 
-      this.bankRoll = this.bankRoll - betAmount;
-      let bet = new PassLineBet(betAmount, this.playerId);
-
-      table.placeBet(bet);
-    }
-  };
+    missingBets.forEach(bet => {
+      let okayToPlace = bet.isOkayToPlace(table);
+      if (okayToPlace) {
+        this.bankRoll = this.bankRoll - bet.totalAmount;
+        bet.player = this.playerId;
+        table.placeBet(bet);
+      }
+    });
+  }
 
   /**
    * Collect all bets that have a payout
-   * @param table 
+   * @param table
    */
   resolveHand(table: CrapsTable) {
     let myBets = table.getPlayerBets(this.playerId);
@@ -36,7 +40,7 @@ export class Player {
         this.bankRoll += bet.amount;
         bet.amount = 0;
       }
-    })
+    });
   }
 
   static getPlayer(): Player {
