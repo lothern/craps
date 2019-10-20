@@ -1,14 +1,13 @@
 import { CrapsTable } from "./craps-table";
 import { Player } from "./player";
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
 export class CrapsGame {
-  
-  table : CrapsTable;
+  table: CrapsTable;
   players: Player[];
-  
+
   constructor() {
-    this.table = new CrapsTable;
+    this.table = new CrapsTable();
     this.players = [];
   }
 
@@ -17,17 +16,21 @@ export class CrapsGame {
     newPlayers.forEach(player => {
       this.table.onPlaceBets(player.placeBets);
       this.players.push(player);
-    }); 
+    });
   }
 
-  startGame(rollsToPlay : number) : void {
+  startGame(rollsToPlay: number): void {
     while (this.keepPlaying(this.players, this.table, rollsToPlay)) {
       this.playHand();
       rollsToPlay--;
-    } 
+    }
   }
 
-  keepPlaying(players: Player[], table: CrapsTable, rollsToPlay : number) : boolean {
+  keepPlaying(
+    players: Player[],
+    table: CrapsTable,
+    rollsToPlay: number
+  ): boolean {
     // Do we have unresolved bets?
     let haveBets = table.bets.length > 0;
 
@@ -44,15 +47,15 @@ export class CrapsGame {
     return output;
   }
 
-  playHand() : void {
+  playHand(): void {
     this.placeBets();
     this.table.rollDice();
     this.players.forEach(player => {
       player.resolveHand(this.table);
-    })
+    });
   }
 
-  placeBets() : void {
+  placeBets(): void {
     this.players.forEach(player => {
       player.placeBets(this.table);
     });

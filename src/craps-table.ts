@@ -1,10 +1,9 @@
-import { Dice, LiveDice } from './dice/dice';
-import * as _ from 'lodash';
-import {BaseBet } from './bets/base-bet';
+import { Dice, LiveDice } from "./dice/dice";
+import * as _ from "lodash";
+import { BaseBet } from "./bets/base-bet";
 
 export class CrapsTable {
-
-  public currentPoint: number
+  public currentPoint: number;
 
   public dice: Dice;
 
@@ -20,7 +19,7 @@ export class CrapsTable {
 
   get isPointOn(): boolean {
     return !(this.currentPoint == undefined);
-  };
+  }
 
   getLastRoll(): number {
     return _.last(this.dice.rollHistory);
@@ -28,11 +27,11 @@ export class CrapsTable {
 
   placeBet(bet: BaseBet): void {
     this._bets.push(bet);
-  };
+  }
 
   get bets(): BaseBet[] {
     return this._bets;
-  };
+  }
 
   onPlaceBets(bettor: (table: CrapsTable) => void) {
     this.bettors.push(bettor);
@@ -46,7 +45,6 @@ export class CrapsTable {
   }
 
   rollDice(): void {
-
     // TODO: Add player table load logging right before dice roll.
     // How much each player has on the table (# of bets and total amount)
 
@@ -58,20 +56,20 @@ export class CrapsTable {
 
     // 'Handle' the on/off puck table state.
     if (this.isPointOn) {
-      if (this.currentPoint === rollvalue
-        || rollvalue === 7) {
+      if (this.currentPoint === rollvalue || rollvalue === 7) {
         this.currentPoint = undefined;
       }
     } else {
-      if (rollvalue >= 4 && rollvalue <= 6 ||
-        rollvalue >= 8 && rollvalue <= 10) {
+      if (
+        (rollvalue >= 4 && rollvalue <= 6) ||
+        (rollvalue >= 8 && rollvalue <= 10)
+      ) {
         this.currentPoint = rollvalue;
       }
     }
   }
 
   resolveBets(rollValue: number) {
-
     this._bets.forEach(bet => {
       bet.evaluateDiceRoll(rollValue, this);
     });

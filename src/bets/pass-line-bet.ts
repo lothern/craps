@@ -5,7 +5,6 @@ import { BaseBet, BetTypes } from "./base-bet";
  *  Pass line or come line bet
  */
 export class PassLineBet extends BaseBet {
-
   oddsAmount: number = 0;
 
   constructor(amount: number, playerId: string) {
@@ -13,19 +12,20 @@ export class PassLineBet extends BaseBet {
   }
 
   static isOkayToPlace(table: CrapsTable): boolean {
-    let plb = new PassLineBet(1,'dummy');
-    return plb.isOkayToPlace(table)
-  }
-  
-  lose() {
-    // Zero out the bet anticipating the table will remove 
-    // zero amount bets.
-    this.amount = 0;
-    this.oddsAmount = 0;
+    let plb = new PassLineBet(1, "dummy");
+    return plb.isOkayToPlace(table);
   }
 
   isOkayToPlace(table: CrapsTable): boolean {
     return !table.isPointOn;
+  }
+
+  isEqual(otherBet: BaseBet): boolean {
+    if (super.isEqual(otherBet)) {
+      let otherPassBet = otherBet as PassLineBet;
+      return otherPassBet && this.oddsAmount == otherPassBet.oddsAmount;
+    }
+    return false;
   }
 
   evaluateDiceRoll(rollValue: number, table: CrapsTable) {
@@ -48,7 +48,7 @@ export class PassLineBet extends BaseBet {
             this.lose();
           } else {
             // 7 on Comeout
-            this.win(table)
+            this.win(table);
           }
           break;
         case 11:
@@ -59,6 +59,13 @@ export class PassLineBet extends BaseBet {
           break;
       }
     }
+  }
+
+  lose() {
+    // Zero out the bet anticipating the table will remove
+    // zero amount bets.
+    this.amount = 0;
+    this.oddsAmount = 0;
   }
 
   //Pays: 2:1 on 4, 10; 3:2 on 5, 9; 6:5 on 6,8
