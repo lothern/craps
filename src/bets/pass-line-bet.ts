@@ -28,6 +28,10 @@ export class PassLineBet extends BaseBet {
     return false;
   }
 
+  get totalAmount () : number {
+    return this.amount + this.oddsAmount;
+  }
+
   evaluateDiceRoll(rollValue: number, table: CrapsTable) {
     // If there is a point and it's hit, the bet wins.
     if (table.isPointOn && rollValue == table.currentPoint) {

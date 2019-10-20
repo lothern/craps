@@ -19,6 +19,10 @@ export abstract class BaseBet {
     this.player = playerId;
   }
 
+  get totalAmount () : number {
+    return this.amount;
+  }
+
   isEqual(checkBet: BaseBet): boolean {
     return (
       this.betType == checkBet.betType &&
@@ -28,7 +32,7 @@ export abstract class BaseBet {
     );
   }
 
-  // static isOkayToPlace() : boolean
+  abstract isOkayToPlace(crapsTable : CrapsTable) : boolean
   abstract evaluateDiceRoll(rollValue: number, table: CrapsTable): void;
   abstract win(table: CrapsTable): void;
   abstract lose(): void;

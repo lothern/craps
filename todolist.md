@@ -11,7 +11,7 @@ This is the backlog for what will get done.
 
 ## Strategy
 
-1. Build out strategy functionality for player
+1. Refactor strategy to be simpler.
 
 ## Analysis
 
@@ -21,5 +21,6 @@ This is the backlog for what will get done.
 
 ## Done
 
-1. [Game] Have game continue past number of rolls until all bets resolve OR do a cashout at end option
-1. [Game] Add Come bets
+- [Strategy] Stand up basic strategy functionality for player
+- [Game] Add Come bets
+- [Game] Have game continue past number of rolls until all bets resolve OR do a cashout at end option

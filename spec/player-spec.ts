@@ -1,40 +1,46 @@
-import { Player } from '../src/player';
-import { CrapsTable } from '../src/craps-table';
-import { TableMaker } from './table-maker/table-maker';
-import { PassLineBet } from '../src/bets/pass-line-bet';
+import { Player } from "../src/player";
+import { CrapsTable } from "../src/craps-table";
+import { TableMaker } from "./table-maker/table-maker";
+import { PassLineBet } from "../src/bets/pass-line-bet";
+import { Strategy } from "../src/strategy";
 
-describe('Player', () => {
-  
-  let player : Player;
-  let testBankRoll : number = 500;
+describe("Player", () => {
+  let player: Player;
+  let testBankRoll: number = 500;
 
-  beforeEach(() =>{
+  beforeEach(() => {
     player = new Player();
     player.bankRoll = testBankRoll;
   });
-  
-  it('should reduce bankroll when bets are placed', () => {
+
+  it("should reduce bankroll when bets are placed", () => {
     let table = new CrapsTable();
     let startingBankRoll = player.bankRoll;
-    
+
     expect(startingBankRoll).toBeGreaterThan(0);
-    
+
+    player.strategy.bets = [
+      new PassLineBet(10, player.playerId)
+    ];
+
     player.placeBets(table);
-    
+
     expect(player.bankRoll).toBeLessThan(startingBankRoll);
-    expect(table.getPlayerBets(player.playerId).length). toBeGreaterThan(0);
+    expect(table.getPlayerBets(player.playerId).length).toBeGreaterThan(0);
   });
 
-  it('should increase bankroll when bets are won', () => {
+  it("should increase bankroll when bets are won", () => {
     let table = new CrapsTable();
     let startingBankRoll = player.bankRoll;
-
+    player.strategy.bets = [
+      new PassLineBet(10, player.playerId)
+    ];
     player.placeBets(table);
 
     let postBetBankRoll = player.bankRoll;
 
     let playerBets = table.getPlayerBets(player.playerId);
-    
+
     expect(playerBets.length).toBeGreaterThan(0);
     expect(postBetBankRoll).toBeLessThan(startingBankRoll);
 
@@ -48,9 +54,13 @@ describe('Player', () => {
     expect(player.bankRoll).toBeGreaterThan(postBetBankRoll);
   });
 
-  it('should place a bet if there isn\'t one', () => {
+  it("should place a bet if there isn't one", () => {
     let table = TableMaker.getTable().value();
     expect(table.bets).toEqual([]);
+
+    let strategy = new Strategy();
+    strategy.bets = [new PassLineBet(10, player.playerId)];
+    player.strategy = strategy;
 
     player.placeBets(table);
     expect(table.bets.length).toBe(1);
@@ -59,7 +69,7 @@ describe('Player', () => {
     expect(table.bets.length).toBe(1);
   });
 
-  it('should collect bet if there is a payout', () => {
+  it("should collect bet if there is a payout", () => {
     let table = TableMaker.getTable().value();
     player.bankRoll = 0;
 
@@ -70,6 +80,5 @@ describe('Player', () => {
     player.resolveHand(table);
 
     expect(player.bankRoll).toBe(10 + 10);
-    
   });
 });

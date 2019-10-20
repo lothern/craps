@@ -2,12 +2,17 @@ import { CrapsGame } from "../src/craps-game";
 import { Player } from "../src/player";
 import { TableMaker } from "./table-maker/table-maker";
 import { RiggedDice } from "./dice/rigged-dice";
+import { PassLineBet } from "../src/bets/pass-line-bet";
 
 describe('Integration Tests: ', () => {
 
   it('should allow a player to play and win passline', () => {
     let player = new Player();
     player.bankRoll = 10;
+    player.strategy.bets = [
+      new PassLineBet(10, player.playerId)
+    ];
+
     spyOn(player, 'placeBets').and.callThrough();
     
     // Setup a table that will estabish a point and make
@@ -45,9 +50,12 @@ describe('Integration Tests: ', () => {
     expect(player.bankRoll).toBe(20);
   });
 
-  it('should take a players money if they seven out', () => {
+  it('should take a player\'s money if they seven out', () => {
     let player = new Player();
     player.bankRoll = 100;
+    player.strategy.bets = [
+      new PassLineBet(10, player.playerId)
+    ];
 
     const diceRolls = [6, 5, 4, 7];
     let table = TableMaker.getTable().withRiggedDice(diceRolls).value();
