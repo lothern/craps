@@ -29,6 +29,6 @@ export class LiveDice extends Dice {
 
   private rollD6() : number {
     let die = Math.round(this.twister.random() * 10000);
-    return (die % 6) + 1
+    return (die % 6) + 1;
   };
 }

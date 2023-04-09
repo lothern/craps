@@ -1,6 +1,5 @@
 import { CrapsTable } from "./craps-table";
 import { Player } from "./player";
-import * as _ from "lodash";
 
 export class CrapsGame {
   table: CrapsTable;
@@ -12,7 +11,6 @@ export class CrapsGame {
   }
 
   registerPlayers(newPlayers: Player[]) {
-    let self = this;
     newPlayers.forEach(player => {
       this.table.onPlaceBets(player.placeBets);
       this.players.push(player);
